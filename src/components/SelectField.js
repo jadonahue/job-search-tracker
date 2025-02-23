@@ -6,7 +6,7 @@ export default function SelectField({ name, value, onChange, options, className 
             name={name}
             value={value}
             onChange={onChange}
-            className={`h-10 m-1 rounded-lg ${className}`}
+            className={`h-10 m-1 rounded-lg text-gray-400 ${className}`}
         >
             {options.map((option) => (
                 <option key={uuidv4()} value={option}>
