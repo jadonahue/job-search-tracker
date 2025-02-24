@@ -1,7 +1,9 @@
+import SignupForm from "@/components/SignupForm"
+
 export default function Page() {
     return (
-        <div>
-            <h1>placeholder</h1>
+        <div className="flex justify-center items-center min-h-screen">
+            <SignupForm />
         </div>
     )
 }
