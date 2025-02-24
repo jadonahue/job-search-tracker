@@ -8,7 +8,7 @@ const jobs = [
         title: "Senior Frontend Developer",
         description: "Work on cutting-edge frontend technologies.",
         status: "interviewing",
-        favorited: true
+        saved: true
     },
     {
         id: uuidv4(),
@@ -16,7 +16,7 @@ const jobs = [
         title: "Senior Backend Developer",
         description: "Work on cutting-edge backend technologies.",
         status: "offer",
-        favorited: false
+        saved: false
     },
     {
         id: uuidv4(),
@@ -24,7 +24,7 @@ const jobs = [
         title: "Senior Fullstack Developer",
         description: "Work on cutting-edge Fullstack technologies.",
         status: "applied",
-        favorited: true
+        saved: true
     },
     {
         id: uuidv4(),
@@ -32,7 +32,7 @@ const jobs = [
         title: "UI/UX Designer",
         description: "Work on design.",
         status: "rejected",
-        favorited: false
+        saved: false
     },
     {
         id: uuidv4(),
@@ -40,21 +40,34 @@ const jobs = [
         title: "UI/UX Designer",
         description: "Work on design.",
         status: "interviewing",
-        favorited: false
+        saved: false
     }
 ]
 
-const JobList = () => {
+const JobList = ({ filterType }) => {
 
-    const savedJobs = jobs.filter(job => job.favorited);
+    const savedJobs = jobs.filter(job => job.saved);
+
+    const savedJobsList = savedJobs.length > 0
+        ? savedJobs.map((job) => <JobCard key={job.id} job={job} />)
+        : <p className="text-gray-500">No saved jobs yet</p>;
+
+    if (filterType === "saved") {
+        return (
+            <div>
+                <h2 className="text-lg font-semibold mb-2">Saved Jobs</h2>
+                <div className="flex flex-wrap gap-4">
+                    {savedJobsList}
+                </div>
+            </div>
+        )
+    }
+
     const appliedJobs = jobs.filter(job => job.status === "applied");
     const interviewingJobs = jobs.filter(job => job.status === "interviewing");
     const offerJobs = jobs.filter(job => job.status === "offer");
     const rejectedJobs = jobs.filter(job => job.status === "rejected");
 
-    const savedJobsList = savedJobs.length > 0
-        ? savedJobs.map((job) => <JobCard key={job.id} job={job} />)
-        : <p className="text-gray-500">No saved jobs yet</p>;
 
     const appliedJobsList = appliedJobs.length > 0
         ? appliedJobs.map((job) => <JobCard key={job.id} job={job} />)
@@ -69,7 +82,7 @@ const JobList = () => {
         : <p className="text-gray-500">No job offers yet</p>
 
     const rejectedJobsList = rejectedJobs.length > 0
-        ? offerJobs.map((job) => <JobCard key={job.id} job={job} />)
+        ? rejectedJobs.map((job) => <JobCard key={job.id} job={job} />)
         :
         <p className="text=gray-500">No rejected jobs yet</p>
 

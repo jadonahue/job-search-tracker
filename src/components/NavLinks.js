@@ -8,7 +8,7 @@ import clsx from "clsx";
 // Define visibilty rules for path url 
 const visibilityRules = {
     "/": ["Home", "Signup"],
-    "*": ["Dashboard", "Search", "Favorites"]
+    "*": ["Dashboard", "Search", "Saved"]
 }
 
 const links = [
