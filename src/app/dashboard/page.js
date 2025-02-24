@@ -8,11 +8,7 @@ export default function Page() {
     <div className="flex flex-col min-h-screen">
       <Navbar />
       <main className="flex-1 flex flex-col justify-center items-center my-10">
-        <h2 className="text-3xl">Find Your Next Job Now!</h2>
-        <div>
-          <InputField />
-          <Button label="Search" />
-        </div>
+        <h2 className="text-3xl mb-6">Dashboard</h2>
         <JobList />
       </main>
     </div>
