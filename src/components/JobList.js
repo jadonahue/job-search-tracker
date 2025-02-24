@@ -46,15 +46,15 @@ const jobs = [
 
 const JobList = () => {
 
-    const favoriteJobs = jobs.filter(job => job.favorited);
+    const savedJobs = jobs.filter(job => job.favorited);
     const appliedJobs = jobs.filter(job => job.status === "applied");
     const interviewingJobs = jobs.filter(job => job.status === "interviewing");
     const offerJobs = jobs.filter(job => job.status === "offer");
     const rejectedJobs = jobs.filter(job => job.status === "rejected");
 
-    const favoriteJobsList = favoriteJobs.length > 0
-        ? favoriteJobs.map((job) => <JobCard key={job.id} job={job} />)
-        : <p className="text-gray-500">No favorites yet</p>;
+    const savedJobsList = savedJobs.length > 0
+        ? savedJobs.map((job) => <JobCard key={job.id} job={job} />)
+        : <p className="text-gray-500">No saved jobs yet</p>;
 
     const appliedJobsList = appliedJobs.length > 0
         ? appliedJobs.map((job) => <JobCard key={job.id} job={job} />)
@@ -75,10 +75,10 @@ const JobList = () => {
 
     return (
         <div className="grid gap-4 md:grid-cols-5 p-4 mx-10">
-            {/* First Column: Favorite Jobs */}
+            {/* First Column: Saved Jobs */}
             <div>
-                <h2 className="text-lg font-semibold mb-2">Favorites</h2>
-                {favoriteJobsList}
+                <h2 className="text-lg font-semibold mb-2">Saved</h2>
+                {savedJobsList}
             </div>
 
             {/* Second Column: Applied */}

@@ -16,7 +16,7 @@ const links = [
     { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
     { name: 'Search', href: '/search', icon: DocumentMagnifyingGlassIcon },
     { name: "Signup", href: "/signup", icon: UserPlusIcon },
-    { name: 'Favorites', href: '/favorites', icon: StarIcon }
+    { name: 'Saved', href: '/saved', icon: StarIcon }
 ]
 
 export default function NavLinks() {
