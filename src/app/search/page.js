@@ -14,7 +14,8 @@ export default function Page() {
         jobTitle: "",
         jobType: "",
         location: "",
-        salaryRange: ""
+        salaryRange: "",
+        jobStatus: "",
     })
 
     const handleFilterChange = (e) => {

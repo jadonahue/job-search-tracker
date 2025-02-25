@@ -1,4 +1,5 @@
 import JobCard from "@/components/JobCard";
+import SelectField from "@/components/SelectField";
 import { v4 as uuidv4 } from 'uuid';
 
 const jobs = [
@@ -44,18 +45,29 @@ const jobs = [
     }
 ]
 
-const JobList = ({ filterType }) => {
+const JobList = ({ filterType, statusFilter, setStatusFilter }) => {
 
     const savedJobs = jobs.filter(job => job.saved);
 
-    const savedJobsList = savedJobs.length > 0
-        ? savedJobs.map((job) => <JobCard key={job.id} job={job} />)
+    const filteredSavedJobs = statusFilter && statusFilter !== "all"
+        ? savedJobs.filter(job => job.status === statusFilter)
+        : savedJobs;
+
+    const savedJobsList = filteredSavedJobs.length > 0
+        ? filteredSavedJobs.map((job) => <JobCard key={job.id} job={job} />)
         : <p className="text-gray-500">No saved jobs yet</p>;
 
     if (filterType === "saved") {
         return (
             <div>
                 <h2 className="text-lg font-semibold mb-2">Saved Jobs</h2>
+                <SelectField
+                    name="statusFilter"
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    options={["all", "applied", "interviewing", "offer", "rejected"]}
+                />
+
                 <div className="flex flex-wrap gap-4">
                     {savedJobsList}
                 </div>
