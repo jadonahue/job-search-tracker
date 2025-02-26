@@ -1,39 +1,11 @@
 "use client"
 
-import { useState } from "react";
+import { useSignup } from "../store/SignupStore";
 import Button from "./Button";
 
 export default function SignupForm() {
 
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-    });
-
-    const [error, setError] = useState("");
-
-    // Handle input changes
-    const handleChange = (e) => {
-        setFormData({
-            ...formData,
-            [e.target.name]: e.target.value,
-        });
-    }
-
-    // Handle form submission
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (formData.password !== formData.confirmPassword) {
-            setError("Passwords do not match");
-            return; // Prevent form submission if passwords do not match
-        }
-
-        console.log("Signup data submitted:", formData);
-        // Send data to backend API (e.g., using fetch or axios)
-    }
+    const { formData, handleChange, handleSubmit, error, loading } = useSignup();
 
     return (
         <form onSubmit={handleSubmit} className="w-full max-w-xl mx-auto p-4 border rounded-lg">
@@ -90,9 +62,8 @@ export default function SignupForm() {
             {error && <p className="text-red-500">{error}</p>}
 
             <div className="flex justify-center col-span-1">
-                <Button label="Sign Up" type="submit" className="w-auto" />
+                <Button label={loading ? "Signing up..." : "Sign Up"} type="submit" disabled={loading} className="w-auto" />
             </div>
         </form>
     )
-
 }
