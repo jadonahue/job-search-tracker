@@ -11,7 +11,9 @@ export default function JobCard({ job, className = "" }) {
         <div className={`p-4 my-3 shadow-md rounded-lg bg-indigo-200 ${className}`}>
             <h2 className="text-lg font-semibold text-gray-800">{job.title}</h2>
             <p className="text-sm text-gray-600">{job.company}</p>
-            <p className="text-gray-700 mt-2">{job.description}</p>
+            {/* <p className="text-gray-700 mt-2">{job.description}</p> */}
+            <div className="text-gray-700 mt-2" dangerouslySetInnerHTML={{ __html: job.description }} />
+
             <span
                 className={`inline-block px-3 py-1 mt-3 text-sm font-medium rounded ${statusColors[job.status] || "bg-gray-100 text-gray-700"}`}
             >

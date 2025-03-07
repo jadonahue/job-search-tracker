@@ -1,28 +1,20 @@
 "use client";
 
-import { useState } from "react";
-
+import { useJobs } from "@/store/jobStore";
 import Navbar from "@/components/Navbar";
-import Button from "@/components/Button"
+import Button from "@/components/Button";
 import InputField from "@/components/InputField";
 import JobList from "@/components/JobList";
 import SelectField from "@/components/SelectField";
 
 export default function Page() {
-    // State for filters
-    const [filters, setFilters] = useState({
-        jobTitle: "",
-        jobType: "",
-        location: "",
-        salaryRange: "",
-        jobStatus: "",
-    })
+    const { filters, setFilters } = useJobs();
 
     const handleFilterChange = (e) => {
-        setFilters({
-            ...filters,
+        setFilters((prevFilters) => ({
+            ...prevFilters,
             [e.target.name]: e.target.value
-        })
+        }));
     };
 
     return (
@@ -31,54 +23,16 @@ export default function Page() {
             <main className="flex-1 flex flex-col justify-center items-center my-10">
                 <h2 className="text-3xl">Find Your Next Job Now!</h2>
 
-                {/* Filter Section */}
-
-                {/* Search Input */}
+                {/* Filters */}
                 <div className="flex flex-wrap justify-center items-center mb-6">
-                    <InputField
-                        type="text"
-                        name="jobTitle"
-                        value={filters.jobTitle}
-                        onChange={handleFilterChange}
-                        placeholder="Job title..."
-                        className="p-2 border rounded w-60:"
-                    />
-
-                    {/* Location Filter */}
-                    <InputField
-                        type="text"
-                        name="loction"
-                        value={filters.location}
-                        onChange={handleFilterChange}
-                        placeholder="Enter location..."
-                        className="p-2 border rounded w-60:"
-                    />
-
-                    {/* Salary Range Filter */}
-                    <SelectField
-                        name="salaryRange"
-                        value={filters.salaryRange}
-                        onChange={handleFilterChange}
-                        options={["All Salaries", "50k-80k", "80k-120k", "120k+"]}
-                        className="p-2"
-                    >
-                    </SelectField>
-
-                    {/* Job Type Filter */}
-                    <SelectField
-                        name="jobType"
-                        value={filters.jobType}
-                        onChange={handleFilterChange}
-                        options={["All Job Types", "full-time", "part-time", "contract", "Remote"]}
-                        className="p-2"
-                    >
-                    </SelectField>
-
+                    <InputField name="jobTitle" value={filters.jobTitle} onChange={handleFilterChange} placeholder="Job title..." />
+                    <InputField name="location" value={filters.location} onChange={handleFilterChange} placeholder="Enter location..." />
+                    <SelectField name="salaryRange" value={filters.salaryRange} onChange={handleFilterChange} options={["All Salaries", "50k-80k", "80k-120k", "120k+"]} />
+                    <SelectField name="jobType" value={filters.jobType} onChange={handleFilterChange} options={["All Job Types", "full-time", "part-time", "contract", "Remote"]} />
                     <Button label="Search" />
-                    {/* Pass Filters to JobList */}
-                    <JobList filters={filters} />
                 </div>
 
+                <JobList />
             </main>
         </div>
     );

@@ -1,6 +1,7 @@
 {
   "name": "job-search-tracker",
   "version": "0.1.0",
+  "type": "module",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
@@ -12,6 +13,8 @@
     "@heroicons/react": "^2.2.0",
     "axios": "^1.8.1",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "next": "15.1.7",
     "react": "^19.0.0",

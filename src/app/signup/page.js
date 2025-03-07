@@ -1,6 +1,6 @@
 import Navbar from "@/components/Navbar"
 import SignupForm from "@/components/SignupForm"
-import { SignupProvider } from "@/store/SignupStore";
+import { SignupProvider } from "@/store/signupStore";
 
 export default function Page() {
     return (

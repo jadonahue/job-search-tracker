@@ -1,6 +1,6 @@
 "use client"
 
-import { useSignup } from "../store/SignupStore";
+import { useSignup } from "../store/signupStore.js";
 import Button from "./Button";
 
 export default function SignupForm() {
