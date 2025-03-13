@@ -6,7 +6,7 @@ export default function InputField({ type = "text", name, value, onChange, place
             value={value}
             onChange={onChange}
             placeholder={placeholder}
-            className={`h-10 m-1 rounded-lg ${className}`}
+            className={`text-center text-gray-400 h-10 m-1 rounded-lg ${className}`}
         />
     )
 }
