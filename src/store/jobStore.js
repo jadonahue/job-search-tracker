@@ -83,7 +83,7 @@ export function JobProvider({ children }) {
 
         // Apply additional filters for jobTitle and location
         if (filters.jobTitle) {
-            updatedJobs = updatedJobs.filter(job => job.title.toLowerCase().includes(filters.jobTitle.toLowerCase()));
+            updatedJobs = updatedJobs.filter(job => job.position.toLowerCase().includes(filters.jobTitle.toLowerCase()));
         }
         if (filters.location) {
             updatedJobs = updatedJobs.filter(job => job.location.toLowerCase().includes(filters.location.toLowerCase()));
