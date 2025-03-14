@@ -1,3 +1,5 @@
+import Button from "./Button"
+
 export default function JobCard({ job, className = "" }) {
     // Define colors for each status
     const statusColors = {
@@ -19,6 +21,13 @@ export default function JobCard({ job, className = "" }) {
             >
                 {job.status}
             </span>
+
+            {/* Apply Now Button */}
+            {job.apply_url && (
+                <div className="mt-4">
+                    <Button label="Apply Now" href={job.apply_url} className="w-full text-center" />
+                </div>
+            )}
         </div>
     )
 }
