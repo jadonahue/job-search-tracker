@@ -10,9 +10,10 @@ export default function Page() {
     return (
         <div className="flex flex-col min-h-screen">
             <Navbar />
-            <div className="flex flex-1 justify-center items-center">
+            <div className="flex flex-1 justify-center items-center p-4">
+                {/* Pass filterType as "saved" to show only saved jobs */}
                 <JobList filterType="saved" statusFilter={statusFilter} setStatusFilter={setStatusFilter} />
             </div>
         </div>
-    )
+    );
 }

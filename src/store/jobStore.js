@@ -8,6 +8,7 @@ const JobContext = createContext();
 export function JobProvider({ children }) {
     const [jobs, setJobs] = useState([]); // Store all fetched jobs.
     const [filteredJobs, setFilteredJobs] = useState([]); // Stores only filtered jobs.
+    const [savedJobs, setSavedJobs] = useState([]); // Store saved jobs
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -54,7 +55,31 @@ export function JobProvider({ children }) {
         };
 
         fetchJobs();
+
+
     }, []); // Empty dependency array = fetch only once
+
+    // Load saved jobs from local storage when the component mounts
+    useEffect(() => {
+        const storedJobs = JSON.parse(localStorage.getItem("savedJobs")) || [];
+        setSavedJobs(storedJobs);
+    }, []);
+
+    // Save to local storage whenever savedJobs changes
+    useEffect(() => {
+        localStorage.setItem("savedJobs", JSON.stringify(savedJobs));
+    }, [savedJobs]);
+
+
+    // Function to save a job
+    const saveJob = (job) => {
+        setSavedJobs((prevJobs) => [...prevJobs, job]);
+    };
+
+    // Function to remove a saved job
+    const removeSavedJob = (jobId) => {
+        setSavedJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId));
+    };
 
     // // Apply filters when `filters` change (only triggered by Search button)
     useEffect(() => {
@@ -96,6 +121,9 @@ export function JobProvider({ children }) {
     return (
         <JobContext.Provider value={{
             jobs: filteredJobs,
+            savedJobs,
+            saveJob,
+            removeSavedJob,
             loading,
             error,
             filterInputs,
