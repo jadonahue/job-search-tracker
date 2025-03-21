@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getJobs } from "@/services/jobService";
+import { getJobs } from "../../services/jobService";
 
 export default function JobsPage() {
     const [jobs, setJobs] = useState([]);
