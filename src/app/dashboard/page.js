@@ -1,3 +1,5 @@
+"use client";
+
 import Navbar from "@/components/Navbar";
 import Button from "@/components/Button"
 import InputField from "@/components/InputField";
