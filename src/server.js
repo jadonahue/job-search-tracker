@@ -1,12 +1,15 @@
+import dotenv from "dotenv";
+// Load environment variables
+dotenv.config(); // Make sure to call this as a function
+
 import path from "path";
 import { fileURLToPath } from "url";
 import express from "express";
 import cors from "cors";
 import jobRoutes from "./routes/job.js";
-import dotenv from "dotenv";
+import authRoutes from "./routes/auth.js"
 
-// Load environment variables
-dotenv.config(); // Make sure to call this as a function
+
 
 
 // Fix the path resolution
@@ -23,6 +26,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/jobs", jobRoutes);
+app.use("/api/auth", authRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5001;

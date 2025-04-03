@@ -1,7 +1,7 @@
 "use client"
 
 import { createContext, useContext, useState } from "react"
-import { signupUser } from "../service/signupService.js"
+import { signupUser } from "../service/signupService"
 
 const SignupContext = createContext();
 
