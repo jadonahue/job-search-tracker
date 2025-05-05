@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { getJobs } from "@/service/jobService";
+import { postSavedJobForUser } from "../service/jobService";
 
 const JobContext = createContext();
 
@@ -72,8 +73,13 @@ export function JobProvider({ children }) {
 
 
     // Function to save a job
-    const saveJob = (job) => {
+    const saveJob = async (job) => {
         setSavedJobs((prevJobs) => [...prevJobs, job]);
+
+        console.log(job, "spiderman");
+
+        // This will call the service which calls supabase
+        await postSavedJobForUser(job);
     };
 
     // Function to remove a saved job

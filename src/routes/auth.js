@@ -9,9 +9,12 @@ router.post("/login", async (req, res) => {
 
     try {
         const user = await authService.login(email, password);
+        console.log("User:", user);
+
         if (!user) {
             return res.status(401).json({ message: "Invalid credentials" });
         }
+        res.json({ message: "Login successful", user });  // ✅ respond with user
     } catch (error) {
         res.status(500).json({ message: "Error logging in" });
     }

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import JobList from "@/components/JobList";
 import Navbar from "@/components/Navbar";

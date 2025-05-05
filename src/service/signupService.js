@@ -2,9 +2,11 @@ import axios from "axios";
 
 export const signupUser = async (formData) => {
     try {
-        const response = await axios.post("/api/signup", formData, {
+        const response = await axios.post("/api/auth/signup", formData, {
             headers: { "Content-Type": "application/json" },
         })
+
+        console.log("Data from backend signup:", response);
 
         return response.data; // Axios automatically parses JSON responses
     } catch (error) {

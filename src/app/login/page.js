@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/store/authStore"
 import Button from "@/components/Button";
 
 export default function LoginPage() {
     const { login } = useAuth();
+    const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState(null);
@@ -17,6 +19,7 @@ export default function LoginPage() {
 
         try {
             await login(email, password);
+            router.push("/dashboard");
         } catch (error) {
             setError(error.message);
         }

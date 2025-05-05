@@ -8,6 +8,7 @@ import express from "express";
 import cors from "cors";
 import jobRoutes from "./routes/job.js";
 import authRoutes from "./routes/auth.js"
+import savedJobsRoutes from "./routes/savedJobs.js";
 
 
 
@@ -27,6 +28,8 @@ app.use(express.json());
 // Routes
 app.use("/api/jobs", jobRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/saved-jobs", savedJobsRoutes);
+
 
 // Start server
 const PORT = process.env.PORT || 5001;

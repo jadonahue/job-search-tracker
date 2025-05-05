@@ -5,7 +5,6 @@ dotenv.config(); // Ensure environment variables are loaded
 
 console.log("authService is being loaded!");
 
-
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
@@ -18,18 +17,25 @@ const authService = {
         console.log("SUPABASE_URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
         console.log("SUPABASE_ANON_KEY:", process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
 
-
-        const { user, error } = await supabase.auth.signInWithPassword({
+        const res = await supabase.auth.signInWithPassword({
             email,
             password,
         });
 
-        if (error) {
-            console.error("Login failed:", error.message);
-            return { error: error.message };
-        }
+        console.log("Res User Info:", res.data.user);
 
-        return { user };
+
+        // const { user, error } = await supabase.auth.signInWithPassword({
+        //     email,
+        //     password,
+        // });
+
+        // if (error) {
+        //     console.error("Login failed:", error.message);
+        //     return { error: error.message };
+        // }
+
+        return res.data.user;
     },
 
     async logout() {

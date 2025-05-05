@@ -1,26 +1,33 @@
 'use client';
 
-import { HomeIcon, DocumentMagnifyingGlassIcon, StarIcon, UserPlusIcon } from "@heroicons/react/24/outline";
+import { HomeIcon, DocumentMagnifyingGlassIcon, StarIcon, UserPlusIcon, UserIcon, UserMinusIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
+import { useAuth } from "@/store/authStore";
+
 
 // Define visibilty rules for path url 
 const visibilityRules = {
-    "/": ["Home", "Signup"],
-    "*": ["Dashboard", "Search", "Saved"]
+    "/": ["Home", "Signup", "Login"],
+    "*": ["Dashboard", "Search", "Saved", "Logout"]
 }
 
 const links = [
-    { name: 'Home', href: '/', icon: HomeIcon },
+    { name: "Home", href: "/", icon: HomeIcon },
     { name: "Dashboard", href: "/dashboard", icon: HomeIcon },
-    { name: 'Search', href: '/search', icon: DocumentMagnifyingGlassIcon },
+    { name: "Search", href: "/search", icon: DocumentMagnifyingGlassIcon },
     { name: "Signup", href: "/signup", icon: UserPlusIcon },
-    { name: 'Saved', href: '/saved', icon: StarIcon }
+    { name: "Saved", href: "/saved", icon: StarIcon },
+    { name: "Login", href: "/login", icon: UserIcon },
+    { name: "Logout", href: "/logout", icon: UserMinusIcon }
 ]
 
 export default function NavLinks() {
     const pathname = usePathname();
+
+    // Get user state and logout function
+    const { user, logout } = useAuth();
 
     console.log("Current Pathname:", pathname);
 
