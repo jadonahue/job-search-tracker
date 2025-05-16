@@ -1,12 +1,20 @@
+// import { updateSavedJobStatus } from "@/service/jobService";
 import Button from "./Button"
 import { useJobs } from "@/store/jobStore";
 
 export default function JobCard({ job, className = "" }) {
-    const { saveJob, savedJobs = [], removeSavedJob } = useJobs();
+    const { saveJob, savedJobs = [], removeSavedJob, updateSavedJobStatus } = useJobs();
 
     console.log("useJobs() result:", useJobs()); // Debugging
 
     const isSaved = savedJobs.some((savedJob) => savedJob.id === job.id);
+
+    function updateStatus(status) {
+        console.log(status);
+        console.log(job.id);
+        updateSavedJobStatus(job.id, status);
+        console.log("This worked");
+    }
 
     // Define colors for each status
     const statusColors = {
@@ -31,6 +39,65 @@ export default function JobCard({ job, className = "" }) {
                     className={isSaved ? "bg-red-500 text-white" : "bg-green-500 text-white"}
                 />
             </div>
+
+            {/* Applied Button */}
+            <div className="mt-3 flex gap-2">
+                <Button
+                    label={"Applied"}
+                    onClick={() => updateStatus("Applied")}
+                    className={""}
+                />
+                {/* <button
+                    onClick={() => updateStatus("Applied")}
+                    className={"bg-red-500 text-white"}
+                >
+                    Applied</button> */}
+            </div>
+
+            {/* Interviewing Button */}
+            <div className="mt-3 flex gap-2">
+
+                <Button
+                    label={"Interviewing"}
+                    onClick={() => updateStatus("Interviewing")}
+                    className={""}
+                />
+                {/* <button
+                    onClick={() => updateStatus("Interviewing")}
+                    className={"bg-red-500 text-white"}
+                >
+                    Interviewing</button> */}
+            </div>
+
+            {/* Offer Button */}
+            <div className="mt-3 flex gap-2">
+                <Button
+                    label={"Offer"}
+                    onClick={() => updateStatus("Offer")}
+                    className={""}
+                />
+                {/* <button
+                    onClick={() => updateStatus("Offer")}
+                    className={"bg-red-500 text-white"}
+                >
+                    Offer</button> */}
+            </div>
+
+            {/* Rejected Button */}
+            <div className="mt-3 flex gap-2">
+
+                <Button
+                    label={"Rejected"}
+                    onClick={() => updateStatus("Rejected")}
+                    className={""}
+                />
+                {/* <button
+                    onClick={() => updateStatus("Rejected")}
+                    className={"bg-red-500 text-white"}
+                >
+                    Rejected</button> */}
+            </div>
+
 
             {/* Status Bade (Only show if status Exists) */}
             {job.status && (

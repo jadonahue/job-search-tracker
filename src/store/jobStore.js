@@ -1,8 +1,8 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
-import { getJobs } from "@/service/jobService";
-import { postSavedJobForUser } from "../service/jobService";
+import { deleteSavedJobForUser, postSavedJobForUser, getSavedJobsWithStatus, getJobs, updateSavedJobStatusService } from "@/service/jobService";
+// import { postSavedJobForUser } from "../service/jobService";
 
 const JobContext = createContext();
 
@@ -12,6 +12,10 @@ export function JobProvider({ children }) {
     const [savedJobs, setSavedJobs] = useState([]); // Store saved jobs
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    // ✅ ADD STATE TO STORE: Testing
+    const [savedJobsWithStatus, setSavedJobsWithStatus] = useState([]);
+
 
     // Stores actual filters applied to jobs
     const [filters, setFilters] = useState({
@@ -56,9 +60,18 @@ export function JobProvider({ children }) {
         };
 
         fetchJobs();
-
-
     }, []); // Empty dependency array = fetch only once
+
+    // ✅ Move fetchSavedJobsWithStatus to be a top-level async function
+    const fetchSavedJobsWithStatus = async () => {
+        const jobs = await getSavedJobsWithStatus();
+        setSavedJobsWithStatus(jobs);
+    };
+
+    // ✅ useEffect now just calls it on mount
+    useEffect(() => {
+        fetchSavedJobsWithStatus();
+    }, []);
 
     // Load saved jobs from local storage when the component mounts
     useEffect(() => {
@@ -76,15 +89,35 @@ export function JobProvider({ children }) {
     const saveJob = async (job) => {
         setSavedJobs((prevJobs) => [...prevJobs, job]);
 
-        console.log(job, "spiderman");
-
         // This will call the service which calls supabase
         await postSavedJobForUser(job);
     };
 
     // Function to remove a saved job
-    const removeSavedJob = (jobId) => {
+    const removeSavedJob = async (jobId) => {
+        console.log("Removing job:", jobId); // Debug log
+
+        // Remove from local state
         setSavedJobs((prevJobs) => prevJobs.filter((job) => job.id !== jobId));
+
+        // Remove from Supabase
+        await deleteSavedJobForUser(jobId);
+    };
+
+    // Function to update saved job status
+    const updateSavedJobStatus = async (jobId, status) => {
+        console.log("Update job status:", jobId, status); // Debug log
+
+        // Remove from Supabase
+        await updateSavedJobStatusService(jobId, status);
+
+        console.log("This is before fetchjobstatus");
+
+
+        //test
+        await fetchSavedJobsWithStatus()
+
+        console.log("This is after fetchjobstatus");
     };
 
     // // Apply filters when `filters` change (only triggered by Search button)
@@ -128,8 +161,10 @@ export function JobProvider({ children }) {
         <JobContext.Provider value={{
             jobs: filteredJobs,
             savedJobs,
+            savedJobsWithStatus, // ✅ <-- ADD THIS Testing
             saveJob,
             removeSavedJob,
+            updateSavedJobStatus,
             loading,
             error,
             filterInputs,

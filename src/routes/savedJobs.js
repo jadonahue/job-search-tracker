@@ -6,9 +6,7 @@ const router = express.Router();
 // Route to get saved jobs for authenticated user
 router.get("/", async (req, res) => {
     try {
-        
-        console.log("batman");
-        
+
         const savedJobsIds = await getSavedJobsForUser();
         res.json({ savedJobs: savedJobIds });
     } catch (error) {

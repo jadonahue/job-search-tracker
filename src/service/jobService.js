@@ -27,6 +27,26 @@ export const getJobs = async (filters = {}) => {
     }
 }
 
+// Testing
+export async function getSavedJobsWithStatus() {
+    const { data, error } = await supabase
+        .from("saved_jobs")
+        .select("*");
+
+    if (error) {
+        console.error("Error fetching jobs:", error);
+        return [];
+    }
+
+    // Unwrap `job_data` so each job looks like a normal job object
+    return data.map(saved => ({
+        ...saved.job_data, // job info like title, company, description, etc.
+        status: saved.status, // override status from saved_jobs
+        id: saved.job_id, // ensure the top-level ID is consistent
+    }));
+}
+
+
 export async function getSavedJobsForUser() {
     try {
         const {
@@ -88,3 +108,61 @@ export async function postSavedJobForUser(job) {
 }
 
 
+export async function deleteSavedJobForUser(jobId) {
+    try {
+        const {
+            data: { user },
+            error: userError,
+        } = await supabase.auth.getUser();
+
+        if (userError) throw new Error(userError.message);
+        if (!user) throw new Error("User not authenticated");
+
+        const { error: deleteError } = await supabase
+            .from("saved_jobs")
+            .delete()
+            .eq("user_id", user.id)
+            .eq("job_id", jobId);
+
+        if (deleteError) throw new Error(deleteError.message);
+
+        return { success: true };
+
+    } catch (error) {
+        console.log("error in deleteSavedJobForUser:", error.message);
+        return { success: false, message: error.message };
+    }
+}
+
+export async function updateSavedJobStatusService(jobId, status) {
+    try {
+        const {
+            data: { session },
+            error: sessionError,
+        } = await supabase.auth.getSession();
+
+        if (sessionError) throw new Error(sessionError.message);
+        if (!session || !session.user) throw new Error("User not authenticated");
+
+        const user = session.user;
+
+
+        const { data, error: updateError } = await supabase
+            .from("saved_jobs")
+            .update({ status: status }) // 👈 set the new status
+            .eq("user_id", user.id)
+            .eq("job_id", jobId)
+            .select(); // 👈 Return updated row(s) to confirm it worked
+
+        console.log("This is the data:", data);
+
+        console.log("Update result:", data);
+        if (updateError) throw new Error(updateError.message);
+
+        return { success: true };
+
+    } catch (error) {
+        console.log("error in updateSavedJobStatusService:", error.message);
+        return { success: false, message: error.message };
+    }
+}
