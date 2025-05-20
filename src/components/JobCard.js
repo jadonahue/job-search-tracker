@@ -2,6 +2,21 @@
 import Button from "./Button"
 import { useJobs } from "@/store/jobStore";
 
+// Truncate the JobCard so its more readable
+function truncate(str = "", maxLength = 100) {
+    return str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
+}
+
+// strip html from job
+function stripHtml(html = "") {
+    if (typeof document !== "undefined") {
+        const tempDiv = document.createElement("div");
+        tempDiv.innerHTML = html;
+        return tempDiv.textContent || tempDiv.innerText || "";
+    }
+    return "";
+}
+
 export default function JobCard({ job, className = "" }) {
     const { saveJob, savedJobs = [], removeSavedJob, updateSavedJobStatus } = useJobs();
 
@@ -26,10 +41,10 @@ export default function JobCard({ job, className = "" }) {
 
     return (
         <div className={`p-4 my-3 shadow-md rounded-lg bg-indigo-200 ${className}`}>
-            <h2 className="text-lg font-semibold text-gray-800">{job.title}</h2>
-            <p className="text-sm text-gray-600">{job.company}</p>
+            <h2 className="text-lg font-semibold text-gray-800">{truncate(job.title, 50)}</h2>
+            <p className="text-sm text-gray-600">{truncate(job.company, 30)}</p>
             {/* <p className="text-gray-700 mt-2">{job.description}</p> */}
-            <div className="text-gray-700 mt-2" dangerouslySetInnerHTML={{ __html: job.description }} />
+            <p className="text-gray-700 mt-2">{truncate(stripHtml(job.description, 100))}</p>
 
             {/* Save/Unsave Button */}
             <div className="mt-3 flex gap-2">
