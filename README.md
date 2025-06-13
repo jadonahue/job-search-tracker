@@ -1,21 +1,36 @@
-## Job Search Tracker
+# Job Search Tracker
 
-This is a app to help you find jobs and track the status of jobs appplied to.
+A fullstack application to help you track your job applications across different stages like **Applied**, **Interviewing**, **Offer**, and **Rejected** — all in one intuitive dashboard.
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Features
+
+-   🗂️ Kanban-style job tracking board
+-   🔐 User authentication with Supabase
+-   ☁️ Backend powered by Express.js & Supabase
+-   ⚡ Fast and responsive frontend using Next.js and Tailwind CSS
+-   🎯 Clean, modern UI with Heroicons
+
+## Tech Stack
+
+| Tech             | Description                         |
+| ---------------- | ----------------------------------- |
+| **Next.js**      | React framework for the frontend    |
+| **Tailwind CSS** | Utility-first CSS framework         |
+| **Express.js**   | Lightweight backend server          |
+| **Supabase**     | PostgreSQL + Auth + Storage backend |
+| **Axios**        | For HTTP requests                   |
+| **UUID**         | Unique ID generation                |
+| **Heroicons**    | Icon set for UI elements            |
+
 ## Getting Started
 
-First, run the development server:
+### 1. Clone the Repository
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/yourusername/job-search-tracker.git
+cd job-search-tracker
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -23,6 +38,22 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+### Install Dependencies
+
+```bash
+npm install
+```
+
+### Setup Environment Variables
+
+Create the required .env file.
+
+I used Vercel/Supabase postgresSQL
+
+### Run The App Locally
+
+npm run dev
 
 ## Learn More
 
